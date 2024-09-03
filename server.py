@@ -1,23 +1,24 @@
 import socket as sk
+import random
 
 ip = sk.gethostbyname(sk.gethostname())
 port = 9090
 
 PKG_NUM = 0
 
-SERVER = sk.socket(sk.AF_INET,sk.SOCK_STREAM)
-
+SERVER = sk.socket(sk.AF_INET,sk.SOCK_DGRAM)
 SERVER.bind((ip,port))
 
-SERVER.listen(5)
 
 while True:
-    client_sock, client_ip = SERVER.accept() # establishes connection
-    print(f"connection with {client_ip} started")
-    # client sock is used to talk to client
-    data = client_sock.recv(1024)   # recieves data with byte size 1024
-    PKG_NUM = int(data.decode())
-    print(f"[{data.decode()}] obtained from {client_ip}:")
-    client_sock.send(str(PKG_NUM).encode())
-    client_sock.close()
-    print(f"connection with {client_ip} ended")
+    data, client_ip = SERVER.recvfrom(1024)
+    print(f"received [{data.decode()}] from {client_ip} ")
+
+
+    PKG_NUM = random.choice( [int(data.decode()), random.randint(0,int(data.decode())+2)] )
+    # PKG_NUM = int(data.decode())
+    print(f"sending back [{PKG_NUM}] to {client_ip} ")
+
+    SERVER.sendto(str(PKG_NUM).encode(),client_ip)
+
+    print(f"______________________")
