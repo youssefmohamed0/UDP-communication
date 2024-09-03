@@ -15,7 +15,7 @@ while True:
     print(f"received [{data.decode()}] from {client_ip} ")
 
 
-    PKG_NUM = random.choice( [int(data.decode()), random.randint(0,int(data.decode())+2)] ) # simulate connection loss
+    PKG_NUM = random.choice( [int(data.decode()), random.randint(int(data.decode())-5, int(data.decode())+4)] ) # simulate connection loss
     # PKG_NUM = int(data.decode())
     print(f"sending back [{PKG_NUM}] to {client_ip} ")
 
