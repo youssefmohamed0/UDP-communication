@@ -18,7 +18,7 @@ while True:
         print("no response from server, re-requesting packet\n______________________")
         time.sleep(3)
         continue
-    print(f"recived from server [{server_address}]: [{data.decode()}]")
+    print(f"recived from server : [{data.decode()}]")
 
     if data.decode() != str(PKG_NUM):   # check if response is same as message
         print(f"wrong packet, re-requesting packet\n______________________")
